@@ -81,35 +81,37 @@ packages:
   flutter_pcsc:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: flutter_pcsc
+      ref: HEAD
+      resolved-ref: "3d6aa17ca2c42e57061067fa81333cef559cda84"
+      url: "https://github.com/davidsanda/flutter_pcsc.git"
+    source: git
     version: "0.0.4"
   flutter_pcsc_linux:
     dependency: transitive
     description:
-      path: "../../flutter_pcsc_linux"
+      path: "../../../../../AppData/Local/Pub/Cache/git/flutter_pcsc-3d6aa17ca2c42e57061067fa81333cef559cda84/flutter_pcsc_linux"
       relative: true
     source: path
     version: "0.0.3"
   flutter_pcsc_macos:
     dependency: transitive
     description:
-      path: "../../flutter_pcsc_macos"
+      path: "../../../../../AppData/Local/Pub/Cache/git/flutter_pcsc-3d6aa17ca2c42e57061067fa81333cef559cda84/flutter_pcsc_macos"
       relative: true
     source: path
     version: "0.0.3"
   flutter_pcsc_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_pcsc_platform_interface"
+      path: "../../../../../AppData/Local/Pub/Cache/git/flutter_pcsc-3d6aa17ca2c42e57061067fa81333cef559cda84/flutter_pcsc_platform_interface"
       relative: true
     source: path
     version: "0.0.2"
   flutter_pcsc_windows:
     dependency: transitive
     description:
-      path: "../../flutter_pcsc_windows"
+      path: "../../../../../AppData/Local/Pub/Cache/git/flutter_pcsc-3d6aa17ca2c42e57061067fa81333cef559cda84/flutter_pcsc_windows"
       relative: true
     source: path
     version: "0.0.3"

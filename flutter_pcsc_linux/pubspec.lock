@@ -89,9 +89,11 @@ packages:
   flutter_pcsc_platform_interface:
     dependency: "direct main"
     description:
-      path: "../flutter_pcsc_platform_interface"
-      relative: true
-    source: path
+      path: flutter_pcsc_platform_interface
+      ref: HEAD
+      resolved-ref: "3d6aa17ca2c42e57061067fa81333cef559cda84"
+      url: "https://github.com/davidsanda/flutter_pcsc.git"
+    source: git
     version: "0.0.2"
   glob:
     dependency: transitive

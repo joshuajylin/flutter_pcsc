@@ -13,7 +13,9 @@ dependencies:
     sdk: flutter
 
   flutter_pcsc:
-    path: ../
+    git: 
+      url: 'https://github.com/davidsanda/flutter_pcsc.git'
+      path: 'flutter_pcsc'
 
   cupertino_icons: ^1.0.2
 
