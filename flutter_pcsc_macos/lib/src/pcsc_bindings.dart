@@ -232,6 +232,7 @@ class PCSCBinding {
       atr[i] = readerState.rgbAtr[i];
     }
     pcscData['atr'] = atr;
+    pcscData['event_state'] = readerState.dwEventState;
 
     Map data = {};
     data['pcsc_tag'] = pcscData;
