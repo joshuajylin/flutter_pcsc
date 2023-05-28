@@ -6,7 +6,7 @@ description: Demonstrates how to use the flutter_pcsc_windows plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>= 3.0.1'
 
 dependencies:
   flutter:
@@ -14,7 +14,8 @@ dependencies:
 
   flutter_pcsc_windows:
     path: ../
-  flutter_pcsc_platform_interface: ^0.0.2
+  flutter_pcsc_platform_interface:
+    path: ../../flutter_pcsc_platform_interface
 
   cupertino_icons: ^1.0.2
 

@@ -410,7 +410,7 @@ class NativeLibraryWinscard {
 }
 
 @ffi.Packed(1)
-class SCARD_READERSTATE extends ffi.Struct {
+final class SCARD_READERSTATE extends ffi.Struct {
   external ffi.Pointer<ffi.Int8> szReader;
 
   external ffi.Pointer<ffi.Void> pvUserData;
@@ -432,7 +432,7 @@ typedef DWORD = ffi.Uint32;
 
 /// Protocol Control Information (PCI)
 @ffi.Packed(1)
-class SCARD_IO_REQUEST extends ffi.Struct {
+final class SCARD_IO_REQUEST extends ffi.Struct {
   /// < Protocol identifier
   @ffi.Uint64()
   external int dwProtocol;

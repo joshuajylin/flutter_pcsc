@@ -144,7 +144,7 @@ class _MyAppBodyState extends State<MyAppBody> {
   @override
   Widget build(BuildContext context) {
     TextStyle errorStyle = const TextStyle(color: Colors.red);
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
           child: Column(children: [

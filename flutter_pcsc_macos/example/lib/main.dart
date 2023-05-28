@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pcsc_macos/flutter_pcsc_macos.dart';
 import 'dart:async';
@@ -164,7 +163,7 @@ class _MyAppBodyState extends State<MyAppBody> {
   @override
   Widget build(BuildContext context) {
     TextStyle errorStyle = const TextStyle(color: Colors.red);
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
           child: Column(children: [

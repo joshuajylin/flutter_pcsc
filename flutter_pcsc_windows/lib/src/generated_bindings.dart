@@ -366,7 +366,7 @@ class NativeLibraryWinscard {
 
 typedef SCARD_IO_REQUEST = _SCARD_IO_REQUEST;
 
-class _SCARD_IO_REQUEST extends ffi.Struct {
+final class _SCARD_IO_REQUEST extends ffi.Struct {
   @DWORD()
   external int dwProtocol;
 
@@ -395,7 +395,7 @@ typedef BYTE = ffi.Uint8;
 typedef HANDLE = ffi.Pointer<ffi.Void>;
 
 /// /////////////////////////////////////////////////////////////////////////////
-class SCARD_READERSTATEA extends ffi.Struct {
+final class SCARD_READERSTATEA extends ffi.Struct {
   external LPCSTR szReader;
 
   external LPVOID pvUserData;
