@@ -40,6 +40,10 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('cardConnect() has not been implemented.');
   }
 
+  Future<Map<String, dynamic>> scardStatus(int hCard) {
+    throw UnimplementedError('scardStatus() has not been implemented.');
+  }
+
   Future<List<int>> transmit(
       int hCard, int activeProtocol, List<int> commandBytes,
       {bool newIsolate = false}) {
