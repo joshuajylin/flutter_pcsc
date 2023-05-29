@@ -27,6 +27,16 @@ class Pcsc {
         context, reader, shareToInt(share), protocolToInt(protocol)));
   }
 
+  /// Retrieves the current status of a smart card in a reader.
+  ///
+  /// Returns a map with the following keys:
+  /// - 'readerName': the name of the reader
+  /// - 'state': the current state of the card
+  /// - 'protocol': the protocol currently in use by the card, if any
+  static Future<Map<String, dynamic>> scardStatus(int hCard) {
+    return _platform.scardStatus(hCard);
+  }
+
   /// Transmits an APDU to the card.
   static Future<List<int>> transmit(CardStruct card, List<int> commandBytes,
       {bool newIsolate = false}) {

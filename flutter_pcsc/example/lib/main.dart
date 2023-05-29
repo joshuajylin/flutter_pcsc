@@ -99,6 +99,9 @@ class _MyAppBodyState extends State<MyAppBody> {
 
         card = await Pcsc.cardConnect(
             ctx, reader, PcscShare.shared, PcscProtocol.any);
+
+        //get atr via scardStatus
+
         var response = await Pcsc.transmit(card, getCardSerialNumberCommand);
         var sw = response.sublist(response.length - 2);
         var sn = response.sublist(0, response.length - 2);

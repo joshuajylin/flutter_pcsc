@@ -31,6 +31,12 @@ class PcscWindows extends PcscPlatform {
     return _binding.cardConnect(context, reader, shareMode, protocol);
   }
 
+  /// Retrieves the current status of a smart card in a reader.
+  @override
+  Future<Map<String, dynamic>> scardStatus(int hCard) {
+    return _binding.scardStatus(hCard);
+  }
+
   /// Transmits an APDU to the card.
   @override
   Future<List<int>> transmit(

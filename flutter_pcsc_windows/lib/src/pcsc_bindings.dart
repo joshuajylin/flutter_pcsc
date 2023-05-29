@@ -49,6 +49,52 @@ class PCSCBinding {
     }
   }
 
+  Future<Map<String, dynamic>> scardStatus(int hCard) async {
+    var pcbAtrLen = calloc<DWORD>();
+    var dwReaderLen = calloc<DWORD>();
+    var dwState = calloc<DWORD>();
+    var dwProtocol = calloc<DWORD>();
+
+    try {
+      // Initial call to get the lengths
+      var res = _nlwinscard.SCardStatusA(hCard, _nullptr, dwReaderLen, dwState,
+          dwProtocol, _nullptr, pcbAtrLen);
+      _checkAndThrow(res, 'Error while getting status #1');
+
+      // Allocate buffers for the reader name and the ATR
+      var mszReaderNames = calloc<ffi.Int8>(dwReaderLen.value);
+      var pbAtr = calloc<ffi.Uint8>(pcbAtrLen.value);
+
+      try {
+        // Actual call to get the data
+        res = _nlwinscard.SCardStatusA(hCard, mszReaderNames, dwReaderLen,
+            dwState, dwProtocol, pbAtr, pcbAtrLen);
+        _checkAndThrow(res, 'Error while getting status #2');
+
+        // Convert the data to Dart types
+        String readerName =
+            _decodemstr(_asInt8List(mszReaderNames, dwReaderLen.value)).first;
+        Uint8List atr = _asUint8List(pbAtr, pcbAtrLen.value);
+
+        // Return the result
+        return {
+          'reader_name': readerName,
+          'state': dwState.value,
+          'protocol': dwProtocol.value,
+          'atr': atr,
+        };
+      } finally {
+        calloc.free(mszReaderNames);
+        calloc.free(pbAtr);
+      }
+    } finally {
+      calloc.free(pcbAtrLen);
+      calloc.free(dwReaderLen);
+      calloc.free(dwState);
+      calloc.free(dwProtocol);
+    }
+  }
+
   Future<List<String>> listReaders(int context) {
     final pcchReaders = calloc<DWORD>();
     try {
