@@ -101,6 +101,8 @@ class _MyAppBodyState extends State<MyAppBody> {
             ctx, reader, PcscShare.shared, PcscProtocol.any);
 
         //get atr via scardStatus
+        var state = await Pcsc.scardStatus(card.hCard);
+        messages.add(Message.info('ATR: ${hexDump(state['atr'])}'));
 
         var response = await Pcsc.transmit(card, getCardSerialNumberCommand);
         var sw = response.sublist(response.length - 2);

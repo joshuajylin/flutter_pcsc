@@ -75,7 +75,7 @@ packages:
     description:
       path: flutter_pcsc_linux
       ref: HEAD
-      resolved-ref: "3d6aa17ca2c42e57061067fa81333cef559cda84"
+      resolved-ref: "2d19a5bad3d950a8a6a55683571297275f8718d0"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
@@ -84,23 +84,25 @@ packages:
     description:
       path: flutter_pcsc_macos
       ref: HEAD
-      resolved-ref: "3d6aa17ca2c42e57061067fa81333cef559cda84"
+      resolved-ref: "2d19a5bad3d950a8a6a55683571297275f8718d0"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
   flutter_pcsc_platform_interface:
     dependency: transitive
     description:
-      path: "../../../../AppData/Local/Pub/Cache/git/flutter_pcsc-3d6aa17ca2c42e57061067fa81333cef559cda84/flutter_pcsc_platform_interface"
-      relative: true
-    source: path
+      path: flutter_pcsc_platform_interface
+      ref: HEAD
+      resolved-ref: "2d19a5bad3d950a8a6a55683571297275f8718d0"
+      url: "https://github.com/davidsanda/flutter_pcsc.git"
+    source: git
     version: "0.0.2"
   flutter_pcsc_windows:
     dependency: "direct main"
     description:
       path: flutter_pcsc_windows
       ref: HEAD
-      resolved-ref: "3d6aa17ca2c42e57061067fa81333cef559cda84"
+      resolved-ref: "2d19a5bad3d950a8a6a55683571297275f8718d0"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
@@ -161,10 +163,10 @@ packages:
     dependency: "direct dev"
     description:
       name: plugin_platform_interface
-      sha256: "5aadc2af7cd403ad0b95ef654c3e628517f4cae9682b4229a66caf9df71844d2"
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.4"
   sky_engine:
     dependency: transitive
     description: flutter
