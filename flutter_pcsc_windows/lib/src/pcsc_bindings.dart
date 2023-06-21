@@ -170,6 +170,10 @@ class PCSCBinding {
     try {
       var res = _nlwinscard.SCardGetStatusChangeA(
           context, timeout, rgReaderStates, 1);
+      //ignore timeout error
+      if (res == PcscConstants.SCARD_E_TIMEOUT) {
+        return _buildMapData(rgReaderStates.ref);
+      }
       _checkAndThrow(res,
           'Error while waiting for status change (card insertion/removal)');
 
