@@ -97,7 +97,11 @@ class _MyAppBodyState extends State<MyAppBody> {
           messages.add(Message.info('Using reader: $reader'));
         });
         messages.add(Message.info("Waiting for card..."));
-        final m = await Pcsc.waitForCardPresent(ctx, reader);
+        try {
+          final m = await Pcsc.waitForCardPresent(ctx, reader, timeout: 3000);
+        } catch (e) {
+          messages.add(Message.error(e.toString()));
+        }
 
         messages.add(Message.info("Finished waiting. "));
 
