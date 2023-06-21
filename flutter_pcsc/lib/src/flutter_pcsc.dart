@@ -59,7 +59,7 @@ class Pcsc {
   ///
   /// If a card is already present, it does not wait.
   static Future<Map> waitForCardPresent(int context, String readerName,
-      {int timeout = -1}) {
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
     return _platform.waitForCardPresent(context, readerName, timeout: timeout);
   }
 
@@ -67,7 +67,7 @@ class Pcsc {
   ///
   /// If a card is already removed, it does not wait.
   static Future<void> waitForCardRemoved(int context, String readerName,
-      {int timeout = -1}) {
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
     return _platform.waitForCardRemoved(context, readerName, timeout: timeout);
   }
 
