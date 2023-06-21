@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
@@ -170,9 +171,10 @@ class PCSCBinding {
     try {
       var res = _nlwinscard.SCardGetStatusChangeA(
           context, timeout, rgReaderStates, 1);
-      //ignore timeout error
       if (res == PcscConstants.SCARD_E_TIMEOUT) {
-        return _buildMapData(rgReaderStates.ref);
+        throw TimeoutException(
+            'Error while waiting for status change (card insertion/removal)',
+            Duration(milliseconds: timeout));
       }
       _checkAndThrow(res,
           'Error while waiting for status change (card insertion/removal)');
@@ -287,6 +289,7 @@ class PCSCBinding {
     }
     pcscData['atr'] = atr;
     pcscData['event_state'] = readerState.dwEventState;
+    pcscData['current_state'] = readerState.dwCurrentState;
     Map data = {};
     data['pcsc_tag'] = pcscData;
 

@@ -99,12 +99,15 @@ class _MyAppBodyState extends State<MyAppBody> {
         messages.add(Message.info("Waiting for card..."));
         try {
           final m = await Pcsc.waitForCardPresent(ctx, reader, timeout: 3000);
+          messages.add(Message.info(
+              "Finished waiting. Reader state: " + m['pcsc_tag'].toString()));
+          setState(() {});
         } catch (e) {
           messages.add(Message.error(e.toString()));
+          setState(() {});
         }
-
-        messages.add(Message.info("Finished waiting. "));
-
+        messages.add(Message.info("Connecting to card..."));
+        setState(() {});
         card = await Pcsc.cardConnect(
             ctx, reader, PcscShare.shared, PcscProtocol.any);
 
