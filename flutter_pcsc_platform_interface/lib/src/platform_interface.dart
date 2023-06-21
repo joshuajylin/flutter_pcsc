@@ -1,3 +1,4 @@
+import 'package:flutter_pcsc_platform_interface/flutter_pcsc_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// The interface that implementations of flutter_pcsc must implement.
@@ -58,11 +59,13 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('releaseContext() has not been implemented.');
   }
 
-  Future<Map> waitForCardPresent(int context, String readerName, int timeout) {
+  Future<Map> waitForCardPresent(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 
-  Future<void> waitForCardRemoved(int context, String readerName, int timeout) {
+  Future<void> waitForCardRemoved(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 }
