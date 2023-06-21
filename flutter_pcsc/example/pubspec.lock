@@ -83,7 +83,7 @@ packages:
     description:
       path: flutter_pcsc
       ref: HEAD
-      resolved-ref: b677c81898fcc2c8fa9dd51d11d622ee43b97eee
+      resolved-ref: "8d67493b5db805f3a4b3196cdd5e101e8dfbc84f"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.4"
@@ -92,7 +92,7 @@ packages:
     description:
       path: flutter_pcsc_linux
       ref: HEAD
-      resolved-ref: b677c81898fcc2c8fa9dd51d11d622ee43b97eee
+      resolved-ref: "8d67493b5db805f3a4b3196cdd5e101e8dfbc84f"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
@@ -101,7 +101,7 @@ packages:
     description:
       path: flutter_pcsc_macos
       ref: HEAD
-      resolved-ref: b677c81898fcc2c8fa9dd51d11d622ee43b97eee
+      resolved-ref: "8d67493b5db805f3a4b3196cdd5e101e8dfbc84f"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
@@ -110,7 +110,7 @@ packages:
     description:
       path: flutter_pcsc_platform_interface
       ref: HEAD
-      resolved-ref: b677c81898fcc2c8fa9dd51d11d622ee43b97eee
+      resolved-ref: "8d67493b5db805f3a4b3196cdd5e101e8dfbc84f"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.2"
@@ -119,7 +119,7 @@ packages:
     description:
       path: flutter_pcsc_windows
       ref: HEAD
-      resolved-ref: b677c81898fcc2c8fa9dd51d11d622ee43b97eee
+      resolved-ref: "8d67493b5db805f3a4b3196cdd5e101e8dfbc84f"
       url: "https://github.com/davidsanda/flutter_pcsc.git"
     source: git
     version: "0.0.3"
