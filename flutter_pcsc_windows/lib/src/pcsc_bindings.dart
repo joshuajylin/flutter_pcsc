@@ -159,7 +159,8 @@ class PCSCBinding {
   }
 
   Future<Map> cardGetStatusChange(int context, String readerName,
-      {int currentState = PcscConstants.SCARD_STATE_UNAWARE}) async {
+      {int currentState = PcscConstants.SCARD_STATE_UNAWARE,
+      int timeout = PcscConstants.SCARD_INFINITE}) async {
     ffi.Pointer<SCARD_READERSTATEA> rgReaderStates =
         calloc<SCARD_READERSTATEA>();
 
@@ -168,7 +169,7 @@ class PCSCBinding {
 
     try {
       var res = _nlwinscard.SCardGetStatusChangeA(
-          context, PcscConstants.SCARD_INFINITE, rgReaderStates, 1);
+          context, timeout, rgReaderStates, timeout);
       _checkAndThrow(res,
           'Error while waiting for status change (card insertion/removal)');
 
@@ -189,30 +190,34 @@ class PCSCBinding {
     _checkAndThrow(res, 'Error while releasing context');
   }
 
-  Future<Map> waitForCardPresent(int context, String readerName) async {
-    Map map = await cardGetStatusChange(context, readerName);
+  Future<Map> waitForCardPresent(
+      int context, String readerName, int timeout) async {
+    Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
     int currentState = map['pcsc_tag']['event_state'];
 
     if (currentState & PcscConstants.SCARD_STATE_EMPTY != 0) {
       return await compute(_computeFunctionCardGetStatusChange, {
         'context': context,
         'reader_name': readerName,
-        'current_state': currentState
+        'current_state': currentState,
+        'timeout': timeout
       });
     } else {
       return map;
     }
   }
 
-  Future<void> waitForCardRemoved(int context, String readerName) async {
-    Map map = await cardGetStatusChange(context, readerName);
+  Future<void> waitForCardRemoved(
+      int context, String readerName, int timeout) async {
+    Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
     int currentState = map['pcsc_tag']['event_state'];
 
     if (currentState & PcscConstants.SCARD_STATE_PRESENT != 0) {
       await compute(_computeFunctionCardGetStatusChange, {
         'context': context,
         'reader_name': readerName,
-        'current_state': currentState
+        'current_state': currentState,
+        'timeout': timeout
       });
     }
   }
@@ -233,7 +238,7 @@ class PCSCBinding {
   static Future<Map> _computeFunctionCardGetStatusChange(Map map) async {
     PCSCBinding binding = PCSCBinding();
     return binding.cardGetStatusChange(map['context'], map['reader_name'],
-        currentState: map['current_state']);
+        currentState: map['current_state'], timeout: map['timeout']);
   }
 
   Future<Uint8List> _transmitInNewIsolate(

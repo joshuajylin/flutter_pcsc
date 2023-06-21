@@ -62,15 +62,17 @@ class PcscWindows extends PcscPlatform {
   ///
   /// If a card is already present, it does not wait.
   @override
-  Future<Map> waitForCardPresent(int context, String readerName) {
-    return _binding.waitForCardPresent(context, readerName);
+  Future<Map> waitForCardPresent(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _binding.waitForCardPresent(context, readerName, timeout);
   }
 
   /// Waits for a card to be removed on the specified reader.
   ///
   /// If a card is already removed, it does not wait.
   @override
-  Future<void> waitForCardRemoved(int context, String readerName) {
-    return _binding.waitForCardRemoved(context, readerName);
+  Future<void> waitForCardRemoved(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _binding.waitForCardRemoved(context, readerName, timeout);
   }
 }

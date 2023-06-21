@@ -58,11 +58,11 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('releaseContext() has not been implemented.');
   }
 
-  Future<Map> waitForCardPresent(int context, String readerName) {
+  Future<Map> waitForCardPresent(int context, String readerName, int timeout) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 
-  Future<void> waitForCardRemoved(int context, String readerName) {
+  Future<void> waitForCardRemoved(int context, String readerName, int timeout) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 }

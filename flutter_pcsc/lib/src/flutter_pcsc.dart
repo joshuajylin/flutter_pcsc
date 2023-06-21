@@ -58,15 +58,17 @@ class Pcsc {
   /// Waits for a card to be present on the specified reader.
   ///
   /// If a card is already present, it does not wait.
-  static Future<Map> waitForCardPresent(int context, String readerName) {
-    return _platform.waitForCardPresent(context, readerName);
+  static Future<Map> waitForCardPresent(int context, String readerName,
+      {int timeout = -1}) {
+    return _platform.waitForCardPresent(context, readerName, timeout);
   }
 
   /// Waits for a card to be removed on the specified reader.
   ///
   /// If a card is already removed, it does not wait.
-  static Future<void> waitForCardRemoved(int context, String readerName) {
-    return _platform.waitForCardRemoved(context, readerName);
+  static Future<void> waitForCardRemoved(int context, String readerName,
+      {int timeout = -1}) {
+    return _platform.waitForCardRemoved(context, readerName, timeout);
   }
 
   /// Converts a scope to its corresponding identifier.
