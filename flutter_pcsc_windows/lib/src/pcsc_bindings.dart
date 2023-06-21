@@ -169,7 +169,7 @@ class PCSCBinding {
 
     try {
       var res = _nlwinscard.SCardGetStatusChangeA(
-          context, timeout, rgReaderStates, timeout);
+          context, timeout, rgReaderStates, 1);
       _checkAndThrow(res,
           'Error while waiting for status change (card insertion/removal)');
 
