@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 
 import 'package:flutter_pcsc/flutter_pcsc.dart';
 
@@ -97,15 +98,9 @@ class _MyAppBodyState extends State<MyAppBody> {
           messages.add(Message.info('Using reader: $reader'));
         });
         messages.add(Message.info("Waiting for card..."));
-        try {
-          final m = await Pcsc.waitForCardPresent(ctx, reader, timeout: 3000);
-          messages.add(Message.info(
-              "Finished waiting. Reader state: " + m['pcsc_tag'].toString()));
-          setState(() {});
-        } catch (e) {
-          messages.add(Message.error(e.toString()));
-          setState(() {});
-        }
+
+        await Pcsc.waitForCardPresent(ctx, reader, timeout: 3000);
+
         messages.add(Message.info("Connecting to card..."));
         setState(() {});
         card = await Pcsc.cardConnect(
@@ -131,6 +126,10 @@ class _MyAppBodyState extends State<MyAppBody> {
           });
         }
       }
+    } on TimeoutException catch (e) {
+      setState(() {
+        messages.add(Message.error(e.toString()));
+      });
     } finally {
       if (card != null) {
         try {

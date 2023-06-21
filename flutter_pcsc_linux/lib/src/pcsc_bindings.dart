@@ -1,6 +1,6 @@
 import 'dart:ffi' as ffi;
 import 'dart:typed_data';
-
+import 'dart:async';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_pcsc_linux/src/generated_bindings.dart';
@@ -125,6 +125,11 @@ class PCSCBinding {
     try {
       var res =
           _nlwinscard.SCardGetStatusChange(context, timeout, rgReaderStates, 1);
+      if (res == PcscConstants.SCARD_E_TIMEOUT) {
+        throw TimeoutException(
+            'Error while waiting for status change (card insertion/removal)',
+            Duration(milliseconds: timeout));
+      }
       _checkAndThrow(res,
           'Error while waiting for status change (card insertion/removal)');
 
