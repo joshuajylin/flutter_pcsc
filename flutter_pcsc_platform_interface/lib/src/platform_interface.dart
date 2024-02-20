@@ -41,6 +41,10 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('cardConnect() has not been implemented.');
   }
 
+  Future<Map<String, dynamic>> cardReconnect(int hCard) {
+    throw UnimplementedError('cardReconnect() has not been implemented.');
+  }
+
   Future<Map<String, dynamic>> scardStatus(int hCard) {
     throw UnimplementedError('scardStatus() has not been implemented.');
   }
@@ -57,6 +61,15 @@ abstract class PcscPlatform extends PlatformInterface {
 
   Future<void> releaseContext(int context) {
     throw UnimplementedError('releaseContext() has not been implemented.');
+  }
+
+  Future<void> scardBeginTransaction(int hCard) {
+    throw UnimplementedError(
+        'scardBeginTransaction() has not been implemented.');
+  }
+
+  Future<void> scardEndTransaction(int hCard, int disposition) {
+    throw UnimplementedError('scardEndTransaction() has not been implemented.');
   }
 
   Future<Map> waitForCardPresent(int context, String readerName,

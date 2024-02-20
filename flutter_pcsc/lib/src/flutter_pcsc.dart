@@ -27,6 +27,29 @@ class Pcsc {
         context, reader, shareToInt(share), protocolToInt(protocol)));
   }
 
+  static Future<Map<String, dynamic>> cardReconnect(int hCard) async {
+    return await _platform.cardReconnect(hCard);
+  }
+
+  // begin transaction
+  static Future<void> scardBeginTransaction(int hCard,
+      {int retryCount = 10}) async {
+    for (var retry = 0; retry < retryCount; retry++) {
+      try {
+        return await _platform.scardBeginTransaction(hCard);
+      } catch (e) {
+        await Future.delayed(Duration(milliseconds: 100));
+      }
+    }
+  }
+
+  // end transaction
+  static Future<void> scardEndTransaction(
+      int hCard, PcscDisposition disposition) async {
+    return await _platform.scardEndTransaction(
+        hCard, dispositionToInt(disposition));
+  }
+
   /// Retrieves the current status of a smart card in a reader.
   ///
   /// Returns a map with the following keys:

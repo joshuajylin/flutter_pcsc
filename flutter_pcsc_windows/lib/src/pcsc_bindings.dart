@@ -96,6 +96,23 @@ class PCSCBinding {
     }
   }
 
+  Future<Map<String, dynamic>> scardReconnect(int hCard) async {
+    var dwActiveProtocol = calloc<DWORD>();
+    try {
+      var res = _nlwinscard.SCardReconnect(
+          hCard,
+          PcscConstants.SCARD_SHARE_SHARED,
+          PcscConstants.SCARD_PROTOCOL_T0 | PcscConstants.SCARD_PROTOCOL_T1,
+          PcscConstants.SCARD_LEAVE_CARD,
+          dwActiveProtocol);
+      _checkAndThrow(res, 'Error while reconnecting to card');
+
+      return Future.value({'active_protocol': dwActiveProtocol.value});
+    } finally {
+      calloc.free(dwActiveProtocol);
+    }
+  }
+
   Future<List<String>> listReaders(int context) {
     final pcchReaders = calloc<DWORD>();
     try {
@@ -194,6 +211,20 @@ class PCSCBinding {
   Future<void> releaseContext(int context) async {
     var res = _nlwinscard.SCardReleaseContext(context);
     _checkAndThrow(res, 'Error while releasing context');
+  }
+
+  Future<void> scardBeginTransaction(int hCard) {
+    var res = _nlwinscard.SCardBeginTransaction(hCard);
+    _checkAndThrow(res, 'Error while beginning transaction');
+
+    return Future.value(PcscConstants.SCARD_S_SUCCESS);
+  }
+
+  Future<void> scardEndTransaction(int hCard, int disposition) {
+    var res = _nlwinscard.SCardEndTransaction(hCard, disposition);
+    _checkAndThrow(res, 'Error while ending transaction');
+
+    return Future.value(PcscConstants.SCARD_S_SUCCESS);
   }
 
   Future<Map> waitForCardPresent(

@@ -37,6 +37,13 @@ class PcscWindows extends PcscPlatform {
     return _binding.scardStatus(hCard);
   }
 
+  /// Reconnects to the card.
+  /// This is useful when the card has been disconnected and needs to be reconnected.
+  @override
+  Future<Map<String, dynamic>> cardReconnect(int hCard) {
+    return _binding.scardReconnect(hCard);
+  }
+
   /// Transmits an APDU to the card.
   @override
   Future<List<int>> transmit(
@@ -56,6 +63,19 @@ class PcscWindows extends PcscPlatform {
   @override
   Future<void> releaseContext(int context) {
     return _binding.releaseContext(context);
+  }
+
+  /// Begins a transaction.
+  /// This is useful when multiple commands need to be sent to the card.
+  @override
+  Future<void> scardBeginTransaction(int hCard) {
+    return _binding.scardBeginTransaction(hCard);
+  }
+
+  /// Ends a transaction.
+  @override
+  Future<void> scardEndTransaction(int hCard, int disposition) {
+    return _binding.scardEndTransaction(hCard, disposition);
   }
 
   /// Waits for a card to be present on the specified reader.
