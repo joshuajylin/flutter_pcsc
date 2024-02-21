@@ -41,6 +41,7 @@ class Pcsc {
         await Future.delayed(Duration(milliseconds: 100));
       }
     }
+    return await _platform.scardBeginTransaction(hCard);
   }
 
   // end transaction
