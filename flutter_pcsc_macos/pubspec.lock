@@ -107,7 +107,7 @@ packages:
     description:
       path: flutter_pcsc_platform_interface
       ref: HEAD
-      resolved-ref: "67ee565dbc2afc4c3691dc3cd14ef4f08c3f24f3"
+      resolved-ref: "1e51c3faf01cfabb766137a18bfb92bf0ebd2dc7"
       url: "https://github.com/joshuajylin/flutter_pcsc.git"
     source: git
     version: "0.0.2"
