@@ -11,21 +11,24 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_pcsc_linux:
-    git:
-      url: https://github.com/joshuajylin/flutter_pcsc.git
-      path: 'flutter_pcsc_linux'
+    path: ../flutter_pcsc_linux
+    #git:
+    #  url: https://github.com/joshuajylin/flutter_pcsc.git
+    #  path: 'flutter_pcsc_linux'
   flutter_pcsc_macos:
-    git:
-      url: https://github.com/joshuajylin/flutter_pcsc.git
-      path: 'flutter_pcsc_macos'
+    path: ../flutter_pcsc_macos
+    #git:
+    #  url: https://github.com/joshuajylin/flutter_pcsc.git
+    #  path: 'flutter_pcsc_macos'
   #flutter_pcsc_platform_interface:
   #  git:
   #    url: https://github.com/joshuajylin/flutter_pcsc.git
   #    path: 'flutter_pcsc_platform_interface'
   flutter_pcsc_windows:
-    git:
-      url: https://github.com/joshuajylin/flutter_pcsc.git
-      path: 'flutter_pcsc_windows'
+    path: ../flutter_pcsc_windows
+    #git:
+    #  url: https://github.com/joshuajylin/flutter_pcsc.git
+    #  path: 'flutter_pcsc_windows'
   ffi: ^2.0.2
 
 
