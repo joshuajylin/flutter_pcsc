@@ -74,6 +74,11 @@ class Pcsc {
     return _platform.cardDisconnect(hCard, dispositionToInt(disposition));
   }
 
+  static Future<String> getReaderDeviceInstanceId(
+      int context, String readerName) {
+    return _platform.getReaderDeviceInstanceId(context, readerName);
+  }
+
   /// Releases the PCSC context.
   static Future<void> releaseContext(int context) {
     return _platform.releaseContext(context);

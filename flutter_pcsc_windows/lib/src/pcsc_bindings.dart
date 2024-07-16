@@ -141,6 +141,33 @@ class PCSCBinding {
     }
   }
 
+  Future<String> getReaderDeviceInstanceId(int context, String reader) {
+    ffi.Pointer<ffi.Int8> nativeReaderName =
+        reader.toNativeUtf8(allocator: calloc).cast();
+    final pcchDeviceInstanceId = calloc<DWORD>();
+    try {
+      var res = _nlwinscard.SCardGetReaderDeviceInstanceIdA(
+          context, nativeReaderName, _nullptr, pcchDeviceInstanceId);
+      _checkAndThrow(res, 'Error while getting device instance id #1');
+
+      final mszDeviceInstanceId = calloc<ffi.Int8>(pcchDeviceInstanceId.value);
+      try {
+        res = _nlwinscard.SCardGetReaderDeviceInstanceIdA(context,
+            nativeReaderName, mszDeviceInstanceId, pcchDeviceInstanceId);
+        _checkAndThrow(res, 'Error while getting device instance id #2');
+
+        return Future.value(_decodemstr(
+                _asInt8List(mszDeviceInstanceId, pcchDeviceInstanceId.value))
+            .first);
+      } finally {
+        calloc.free(mszDeviceInstanceId);
+      }
+    } finally {
+      calloc.free(pcchDeviceInstanceId);
+      calloc.free(nativeReaderName);
+    }
+  }
+
   Future<Map> cardConnect(
       int context, String reader, int shareMode, int protocol) async {
     ffi.Pointer<ffi.Int8> nativeReaderName =
