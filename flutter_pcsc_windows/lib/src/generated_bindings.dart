@@ -34,6 +34,28 @@ class NativeLibraryWinscard {
 
   SCARD_IO_REQUEST get g_rgSCardRawPci => _g_rgSCardRawPci.ref;
 
+  int SCardGetReaderDeviceInstanceIdA(
+    int hContext,
+    LPCSTR szReaderName,
+    LPSTR szDeviceInstanceId,
+    LPDWORD pcchDeviceInstanceId,
+  ) {
+    return _SCardGetReaderDeviceInstanceIdA(
+      hContext,
+      szReaderName,
+      szDeviceInstanceId,
+      pcchDeviceInstanceId,
+    );
+  }
+
+  late final _SCardGetReaderDeviceInstanceIdAPtr = _lookup<
+          ffi
+          .NativeFunction<LONG Function(SCARDCONTEXT, LPCSTR, LPSTR, LPDWORD)>>(
+      'SCardGetReaderDeviceInstanceIdA');
+  late final _SCardGetReaderDeviceInstanceIdA =
+      _SCardGetReaderDeviceInstanceIdAPtr.asFunction<
+          int Function(int, LPCSTR, LPSTR, LPDWORD)>();
+
   int SCardEstablishContext(
     int dwScope,
     LPCVOID pvReserved1,
@@ -116,9 +138,9 @@ class NativeLibraryWinscard {
   }
 
   late final _SCardListReadersAPtr = _lookup<
-      ffi.NativeFunction<
-          LONG Function(
-              SCARDCONTEXT, LPCSTR, LPSTR, LPDWORD)>>('SCardListReadersA');
+          ffi
+          .NativeFunction<LONG Function(SCARDCONTEXT, LPCSTR, LPSTR, LPDWORD)>>(
+      'SCardListReadersA');
   late final _SCardListReadersA = _SCardListReadersAPtr.asFunction<
       int Function(int, LPCSTR, LPSTR, LPDWORD)>();
 
@@ -337,9 +359,9 @@ class NativeLibraryWinscard {
   }
 
   late final _SCardGetAttribPtr = _lookup<
-      ffi.NativeFunction<
-          LONG Function(
-              SCARDHANDLE, DWORD, LPBYTE, LPDWORD)>>('SCardGetAttrib');
+          ffi
+          .NativeFunction<LONG Function(SCARDHANDLE, DWORD, LPBYTE, LPDWORD)>>(
+      'SCardGetAttrib');
   late final _SCardGetAttrib =
       _SCardGetAttribPtr.asFunction<int Function(int, int, LPBYTE, LPDWORD)>();
 

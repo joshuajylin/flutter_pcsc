@@ -24,6 +24,11 @@ class PcscWindows extends PcscPlatform {
     return _binding.listReaders(context);
   }
 
+  @override
+  Future<String> getReaderDeviceInstanceId(int context, String readerName) {
+    return _binding.getReaderDeviceInstanceId(context, readerName);
+  }
+
   /// Connects to the card using the specified reader.
   @override
   Future<Map> cardConnect(

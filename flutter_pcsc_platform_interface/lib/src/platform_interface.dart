@@ -77,6 +77,11 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 
+  Future<String> getReaderDeviceInstanceId(int context, String readerName) {
+    throw UnimplementedError(
+        'getReaderDeviceInstanceId() has not been implemented.');
+  }
+
   Future<void> waitForCardRemoved(int context, String readerName,
       {int timeout = PcscConstants.SCARD_INFINITE}) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
