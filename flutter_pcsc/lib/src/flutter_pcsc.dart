@@ -69,6 +69,17 @@ class Pcsc {
         newIsolate: newIsolate);
   }
 
+  /// Get status change for the card
+  static Future<Map> cardGetStatusChange(int context, String readerName,
+      {int currentState = PcscConstants.SCARD_STATE_UNAWARE, int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _platform.cardGetStatusChange(context, readerName, currentState: currentState, timeout: timeout);
+  }
+
+  /// Cancel blocking cardGetStatusChange for the context
+  static Future<void> cardCancel(int context) {
+    return _platform.cardCancel(context);
+  }
+
   /// Disconnects from the card.
   static Future<void> cardDisconnect(int hCard, PcscDisposition disposition) {
     return _platform.cardDisconnect(hCard, dispositionToInt(disposition));
@@ -98,6 +109,22 @@ class Pcsc {
   static Future<void> waitForCardRemoved(int context, String readerName,
       {int timeout = PcscConstants.SCARD_INFINITE}) {
     return _platform.waitForCardRemoved(context, readerName, timeout: timeout);
+  }
+
+  /// Waits for a card's status to be changed on the specified reader.
+  static Future<Map> waitForCardStatusChanged(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _platform.waitForCardStatusChanged(context, readerName, timeout: timeout);
+  }
+
+  /// Cancel blocking cardGetStatusChange for the context
+  static Future<void> cancelWaiting(int context) async {
+    return _platform.cardCancel(context);
+  }
+
+  /// Check validity for the context
+  static Future<bool> isValidContext(int context) async {
+    return _platform.isValidContext(context);
   }
 
   /// Converts a scope to its corresponding identifier.
