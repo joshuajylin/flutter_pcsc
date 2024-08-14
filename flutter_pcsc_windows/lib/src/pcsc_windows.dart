@@ -58,6 +58,19 @@ class PcscWindows extends PcscPlatform {
         newIsolate: newIsolate);
   }
 
+  /// Get status change for the card
+  @override
+  Future<Map> cardGetStatusChange(int context, String readerName,
+      {int currentState = PcscConstants.SCARD_STATE_UNAWARE, int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _binding.cardGetStatusChange(context, readerName, currentState: currentState, timeout: timeout);
+  }
+
+  /// Cancel blocking cardGetStatusChange for the context
+  @override
+  Future<void> cardCancel(int context) {
+    return _binding.cardCancel(context);
+  }
+
   /// Disconnects from the card.
   @override
   Future<void> cardDisconnect(int hCard, int disposition) {
@@ -99,5 +112,24 @@ class PcscWindows extends PcscPlatform {
   Future<void> waitForCardRemoved(int context, String readerName,
       {int timeout = PcscConstants.SCARD_INFINITE}) {
     return _binding.waitForCardRemoved(context, readerName, timeout);
+  }
+
+  /// Waits for a card's status to be changed on the specified reader.
+  @override
+  Future<Map> waitForCardStatusChanged(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
+    return _binding.waitForCardStatusChanged(context, readerName, timeout);
+  }
+
+  /// Cancel blocking cardGetStatusChange for the context
+  @override
+  Future<void> cancelWaiting(int context) async {
+    return cardCancel(context);
+  }
+
+  /// Check validity for the context
+  @override
+  Future<bool> isValidContext(int context) async {
+    return _binding.isValidContext(context);
   }
 }

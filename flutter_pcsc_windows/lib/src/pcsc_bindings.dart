@@ -230,6 +230,11 @@ class PCSCBinding {
     }
   }
 
+  Future<void> cardCancel(int context) async {
+    var res = _nlwinscard.SCardCancel(context);
+    _checkAndThrow(res, 'Error while cancelling card');
+  }
+
   Future<void> cardDisconnect(int hCard, int disposition) async {
     var res = _nlwinscard.SCardDisconnect(hCard, disposition);
     _checkAndThrow(res, 'Error while disconnecting card');
@@ -301,6 +306,28 @@ class PCSCBinding {
       throw TimeoutException('Card is still present in the reader');
     }
     print('PCSC: reader not present. current state: $currentState');
+  }
+
+  Future<Map> waitForCardStatusChanged(
+      int context, String readerName, int timeout) async {
+    Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
+    int currentState = map['pcsc_tag']['event_state'];
+
+    return await compute(_computeFunctionCardGetStatusChange, {
+      'context': context,
+      'reader_name': readerName,
+      'current_state': currentState,
+      'timeout': timeout
+    });
+  }
+
+  Future<void> cancelWaiting(int context) async {
+    return cardCancel(context);
+  }
+
+  Future<bool> isValidContext(int context) async {
+    final result = _nlwinscard.SCardIsValidContext(context);
+    return result == PcscConstants.SCARD_S_SUCCESS;
   }
 
   /*
