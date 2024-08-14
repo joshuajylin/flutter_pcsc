@@ -73,38 +73,30 @@ packages:
   flutter_pcsc_linux:
     dependency: "direct main"
     description:
-      path: flutter_pcsc_linux
-      ref: HEAD
-      resolved-ref: "1e51c3faf01cfabb766137a18bfb92bf0ebd2dc7"
-      url: "https://github.com/joshuajylin/flutter_pcsc.git"
-    source: git
+      path: "../flutter_pcsc_linux"
+      relative: true
+    source: path
     version: "0.0.3"
   flutter_pcsc_macos:
     dependency: "direct main"
     description:
-      path: flutter_pcsc_macos
-      ref: HEAD
-      resolved-ref: "1e51c3faf01cfabb766137a18bfb92bf0ebd2dc7"
-      url: "https://github.com/joshuajylin/flutter_pcsc.git"
-    source: git
+      path: "../flutter_pcsc_macos"
+      relative: true
+    source: path
     version: "0.0.3"
   flutter_pcsc_platform_interface:
     dependency: transitive
     description:
-      path: flutter_pcsc_platform_interface
-      ref: HEAD
-      resolved-ref: "1e51c3faf01cfabb766137a18bfb92bf0ebd2dc7"
-      url: "https://github.com/joshuajylin/flutter_pcsc.git"
-    source: git
+      path: "../flutter_pcsc_platform_interface"
+      relative: true
+    source: path
     version: "0.0.2"
   flutter_pcsc_windows:
     dependency: "direct main"
     description:
-      path: flutter_pcsc_windows
-      ref: HEAD
-      resolved-ref: "1e51c3faf01cfabb766137a18bfb92bf0ebd2dc7"
-      url: "https://github.com/joshuajylin/flutter_pcsc.git"
-    source: git
+      path: "../flutter_pcsc_windows"
+      relative: true
+    source: path
     version: "0.0.3"
   flutter_test:
     dependency: "direct dev"

@@ -55,6 +55,15 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('transmit() has not been implemented.');
   }
 
+  Future<Map> cardGetStatusChange(int context, String readerName,
+      {int currentState = PcscConstants.SCARD_STATE_UNAWARE, int timeout = PcscConstants.SCARD_INFINITE}) {
+    throw UnimplementedError('cardGetStatusChange() has not been implemented.');
+  }
+
+  Future<void> cardCancel(int context) {
+    throw UnimplementedError('cardCancel() has not been implemented.');
+  }
+
   Future<void> cardDisconnect(int hCard, int disposition) {
     throw UnimplementedError('cardDisconnect() has not been implemented.');
   }
@@ -77,9 +86,27 @@ abstract class PcscPlatform extends PlatformInterface {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
   }
 
+  Future<String> getReaderDeviceInstanceId(int context, String readerName) {
+    throw UnimplementedError(
+        'getReaderDeviceInstanceId() has not been implemented.');
+  }
+
   Future<void> waitForCardRemoved(int context, String readerName,
       {int timeout = PcscConstants.SCARD_INFINITE}) {
     throw UnimplementedError('waitForCardPresent() has not been implemented.');
+  }
+
+  Future<Map> waitForCardStatusChanged(int context, String readerName,
+      {int timeout = PcscConstants.SCARD_INFINITE}) {
+    throw UnimplementedError('waitForCardStatusChanged() has not been implemented.');
+  }
+
+  Future<void> cancelWaiting(int context) {
+    throw UnimplementedError('cancelWaiting() has not been implemented.');
+  }
+
+  Future<bool> isValidContext(int context) async {
+    throw UnimplementedError('isValidContext() has not been implemented.');
   }
 }
 

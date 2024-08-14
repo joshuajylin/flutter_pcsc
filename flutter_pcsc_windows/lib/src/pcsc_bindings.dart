@@ -3,7 +3,7 @@ import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
-
+import 'dart:isolate';
 import 'package:ffi/ffi.dart';
 import 'package:flutter_pcsc_platform_interface/flutter_pcsc_platform_interface.dart';
 import 'package:flutter_pcsc_windows/src/generated_bindings.dart';
@@ -141,6 +141,33 @@ class PCSCBinding {
     }
   }
 
+  Future<String> getReaderDeviceInstanceId(int context, String reader) {
+    ffi.Pointer<ffi.Int8> nativeReaderName =
+        reader.toNativeUtf8(allocator: calloc).cast();
+    final pcchDeviceInstanceId = calloc<DWORD>();
+    try {
+      var res = _nlwinscard.SCardGetReaderDeviceInstanceIdA(
+          context, nativeReaderName, _nullptr, pcchDeviceInstanceId);
+      _checkAndThrow(res, 'Error while getting device instance id #1');
+
+      final mszDeviceInstanceId = calloc<ffi.Int8>(pcchDeviceInstanceId.value);
+      try {
+        res = _nlwinscard.SCardGetReaderDeviceInstanceIdA(context,
+            nativeReaderName, mszDeviceInstanceId, pcchDeviceInstanceId);
+        _checkAndThrow(res, 'Error while getting device instance id #2');
+
+        return Future.value(_decodemstr(
+                _asInt8List(mszDeviceInstanceId, pcchDeviceInstanceId.value))
+            .first);
+      } finally {
+        calloc.free(mszDeviceInstanceId);
+      }
+    } finally {
+      calloc.free(pcchDeviceInstanceId);
+      calloc.free(nativeReaderName);
+    }
+  }
+
   Future<Map> cardConnect(
       int context, String reader, int shareMode, int protocol) async {
     ffi.Pointer<ffi.Int8> nativeReaderName =
@@ -232,16 +259,24 @@ class PCSCBinding {
     Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
     int currentState = map['pcsc_tag']['event_state'];
 
-    if (currentState & PcscConstants.SCARD_STATE_EMPTY != 0) {
-      return await compute(_computeFunctionCardGetStatusChange, {
+    Stopwatch stopwatch = Stopwatch();
+    stopwatch.start();
+
+    while (currentState & PcscConstants.SCARD_STATE_EMPTY != 0 &&
+        stopwatch.elapsedMilliseconds < timeout &&
+        map['pcsc_tag']['atr'].isEmpty) {
+      map = await compute(_computeFunctionCardGetStatusChange, {
         'context': context,
         'reader_name': readerName,
         'current_state': currentState,
         'timeout': timeout
       });
-    } else {
-      return map;
+      currentState = map['pcsc_tag']['event_state'];
     }
+    if (map['pcsc_tag']['atr'].isEmpty) {
+      throw TimeoutException('Card is still not present in the reader');
+    }
+    return map;
   }
 
   Future<void> waitForCardRemoved(
@@ -249,14 +284,23 @@ class PCSCBinding {
     Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
     int currentState = map['pcsc_tag']['event_state'];
 
-    if (currentState & PcscConstants.SCARD_STATE_PRESENT != 0) {
-      await compute(_computeFunctionCardGetStatusChange, {
+    Stopwatch stopwatch = Stopwatch();
+    stopwatch.start();
+
+    while (currentState & PcscConstants.SCARD_STATE_PRESENT != 0 &&
+        stopwatch.elapsedMilliseconds < timeout) {
+      map = await compute(_computeFunctionCardGetStatusChange, {
         'context': context,
         'reader_name': readerName,
         'current_state': currentState,
         'timeout': timeout
       });
+      currentState = map['pcsc_tag']['event_state'];
     }
+    if (currentState & PcscConstants.SCARD_STATE_PRESENT != 0) {
+      throw TimeoutException('Card is still present in the reader');
+    }
+    print('PCSC: reader not present. current state: $currentState');
   }
 
   /*
@@ -280,11 +324,11 @@ class PCSCBinding {
 
   Future<Uint8List> _transmitInNewIsolate(
       int hCard, int activeProtocol, List<int> sendCommand) {
-    return compute(_computeFunctionTransmit, {
-      'h_card': hCard,
-      'active_protocol': activeProtocol,
-      'command': sendCommand
-    });
+    return Isolate.run(() => _computeFunctionTransmit({
+          'h_card': hCard,
+          'active_protocol': activeProtocol,
+          'command': sendCommand
+        }));
   }
 
   Future<Uint8List> _transmitInSameIsolate(

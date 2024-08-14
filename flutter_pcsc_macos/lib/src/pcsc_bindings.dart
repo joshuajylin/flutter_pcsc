@@ -141,6 +141,11 @@ class PCSCBinding {
     }
   }
 
+  Future<void> cardCancel(int context) async {
+    var res = _nlwinscard.SCardCancel(context);
+    _checkAndThrow(res, 'Error while cancelling card');
+  }
+
   Future<void> cardDisconnect(int hCard, int disposition) async {
     var res = _nlwinscard.SCardDisconnect(hCard, disposition);
     _checkAndThrow(res, 'Error while disconnecting card');
@@ -181,6 +186,28 @@ class PCSCBinding {
         'timeout': timeout
       });
     }
+  }
+
+  Future<Map> waitForCardStatusChanged(
+      int context, String readerName, int timeout) async {
+    Map map = await cardGetStatusChange(context, readerName, timeout: timeout);
+    int currentState = map['pcsc_tag']['event_state'];
+
+    return await compute(_computeFunctionCardGetStatusChange, {
+      'context': context,
+      'reader_name': readerName,
+      'current_state': currentState,
+      'timeout': timeout
+    });
+  }
+
+  Future<void> cancelWaiting(int context) async {
+    return cardCancel(context);
+  }
+
+  Future<bool> isValidContext(int context) async {
+    final result = _nlwinscard.SCardIsValidContext(context);
+    return result == PcscConstants.SCARD_S_SUCCESS;
   }
 
   /*
@@ -244,7 +271,8 @@ class PCSCBinding {
     }
     pcscData['atr'] = atr;
     pcscData['event_state'] = readerState.dwEventState;
-
+    pcscData['current_state'] = readerState.dwCurrentState;
+    pcscData['reader_name'] = String.fromCharCodes(Uint8List.fromList(_asInt8List(readerState.szReader, _lpcstrLen(readerState.szReader))));
     Map data = {};
     data['pcsc_tag'] = pcscData;
 
@@ -303,5 +331,13 @@ class PCSCBinding {
       result[i] = p[i];
     }
     return result;
+  }
+
+  int _lpcstrLen(ffi.Pointer<ffi.Int8> p) {
+    int i;
+    for (i = 0; p[i] != 0 || i > 64; i++) {
+      // do nothing
+    }
+    return i;
   }
 }
