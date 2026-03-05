@@ -33,7 +33,6 @@ flutter:
     implements: flutter_pcsc
     platforms:
       windows:
-        pluginClass: none
         dartPluginClass: PcscWindows
 
 ffigen:

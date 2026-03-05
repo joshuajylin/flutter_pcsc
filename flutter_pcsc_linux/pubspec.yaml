@@ -32,7 +32,6 @@ flutter:
     implements: flutter_pcsc
     platforms:
       linux:
-        pluginClass: none
         dartPluginClass: PcscLinux
 
 ffigen:
